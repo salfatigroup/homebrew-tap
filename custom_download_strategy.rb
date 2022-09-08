@@ -9,8 +9,6 @@ require "download_strategy"
 # distribution.  (It will work for public buckets as well.)
 class S3DownloadStrategy < CurlDownloadStrategy
   def initialize(url, name, version, **meta)
-    odeprecated("S3DownloadStrategy",
-      "maintaining S3DownloadStrategy in your own formula or tap")
     super
   end
 
@@ -51,8 +49,6 @@ class GitHubPrivateRepositoryDownloadStrategy < CurlDownloadStrategy
   require "utils/github"
 
   def initialize(url, name, version, **meta)
-    odeprecated("GitHubPrivateRepositoryDownloadStrategy",
-      "maintaining GitHubPrivateRepositoryDownloadStrategy in your own formula or tap")
     super
     parse_url_pattern
     set_github_token
@@ -105,8 +101,6 @@ end
 # environment variables HOMEBREW_GITHUB_API_TOKEN) to sign the request.
 class GitHubPrivateRepositoryReleaseDownloadStrategy < GitHubPrivateRepositoryDownloadStrategy
   def initialize(url, name, version, **meta)
-    odeprecated("GitHubPrivateRepositoryReleaseDownloadStrategy",
-      "maintaining GitHubPrivateRepositoryReleaseDownloadStrategy in your own formula or tap")
     super
   end
 
@@ -161,8 +155,6 @@ end
 #     ...
 class ScpDownloadStrategy < AbstractFileDownloadStrategy
   def initialize(url, name, version, **meta)
-    odeprecated("ScpDownloadStrategy",
-      "maintaining ScpDownloadStrategy in your own formula or tap")
     super
     parse_url_pattern
   end
