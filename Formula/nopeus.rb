@@ -14,26 +14,18 @@ class Nopeus < Formula
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/salfatigroup/nopeus/releases/download/v0.1.0/nopeus_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "d698db21c068ccbbb6b987a2191a091cf3704656d956342853db5bada64be70b"
+      sha256 "f0ec1dc35fa3decaf637dc624e084d8fccfa50e494f715faa72473fa6820bcde"
 
       def install
         bin.install "nopeus"
-        bash_completion.install "completions/nopeus.bash" => "nopeus"
-        zsh_completion.install "completions/nopeus.zsh" => "_nopeus"
-        fish_completion.install "completions/nopeus.fish"
-        man1.install "manpages/nopeus.1.gz"
       end
     end
     if Hardware::CPU.intel?
       url "https://github.com/salfatigroup/nopeus/releases/download/v0.1.0/nopeus_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "e65d2ded0ca4db3b5be2fa1c634257d5d6ee67d3053842c5dd4d44f8f5784b32"
+      sha256 "ea4b1356939bbb9fe38f603770cc24e50fb2473b0292a2fa28b9e31093cb44be"
 
       def install
         bin.install "nopeus"
-        bash_completion.install "completions/nopeus.bash" => "nopeus"
-        zsh_completion.install "completions/nopeus.zsh" => "_nopeus"
-        fish_completion.install "completions/nopeus.fish"
-        man1.install "manpages/nopeus.1.gz"
       end
     end
   end
@@ -41,38 +33,26 @@ class Nopeus < Formula
   on_linux do
     if Hardware::CPU.arm? && !Hardware::CPU.is_64_bit?
       url "https://github.com/salfatigroup/nopeus/releases/download/v0.1.0/nopeus_Linux_armv7.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "18760bf57b4b5fdf28c5f6d1205ad817a8cc51ba3037fd79c7b32b63a243c6cc"
+      sha256 "94eeab856693f84e3fc072965838e6b71ca49c16e5cd60ba2bebadb229f5de8e"
 
       def install
         bin.install "nopeus"
-        bash_completion.install "completions/nopeus.bash" => "nopeus"
-        zsh_completion.install "completions/nopeus.zsh" => "_nopeus"
-        fish_completion.install "completions/nopeus.fish"
-        man1.install "manpages/nopeus.1.gz"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
       url "https://github.com/salfatigroup/nopeus/releases/download/v0.1.0/nopeus_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "1c9f874d6fd67e3d6aa513e044542e9fafbcd57b1258e41592d1ed053ba9c27d"
+      sha256 "8e5acc7cf91555955ddbc08303e1e2ea16e5e1fce8695486cd47f10c887a7196"
 
       def install
         bin.install "nopeus"
-        bash_completion.install "completions/nopeus.bash" => "nopeus"
-        zsh_completion.install "completions/nopeus.zsh" => "_nopeus"
-        fish_completion.install "completions/nopeus.fish"
-        man1.install "manpages/nopeus.1.gz"
       end
     end
     if Hardware::CPU.intel?
       url "https://github.com/salfatigroup/nopeus/releases/download/v0.1.0/nopeus_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "f4eee0acf679b4b31246e73f3656a3744d5896ddb2113b1c7286edd63545eafc"
+      sha256 "92ab76e8c75388656d0ff54f6a04d70da947f98738a1a5dc1d987b9c55afdd4a"
 
       def install
         bin.install "nopeus"
-        bash_completion.install "completions/nopeus.bash" => "nopeus"
-        zsh_completion.install "completions/nopeus.zsh" => "_nopeus"
-        fish_completion.install "completions/nopeus.fish"
-        man1.install "manpages/nopeus.1.gz"
       end
     end
   end
