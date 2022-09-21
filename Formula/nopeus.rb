@@ -14,7 +14,7 @@ class Nopeus < Formula
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/salfatigroup/nopeus/releases/download/v0.1.0/nopeus_Darwin_arm64.tar.gz"
-      sha256 "a626f3acf74b5c5027255fa9ecb67fa847153c248bf8600250a86979da2404be"
+      sha256 "6524ab1ad6eac56b9371482293c0601f43c4cc8556dc0bd96fda15633b8398a9"
 
       def install
         bin.install "nopeus"
@@ -22,7 +22,7 @@ class Nopeus < Formula
     end
     if Hardware::CPU.intel?
       url "https://github.com/salfatigroup/nopeus/releases/download/v0.1.0/nopeus_Darwin_x86_64.tar.gz"
-      sha256 "f37687ecf7265944a8b1355fdaaf4af643805d4486a16f7a9d876d7f263d2c40"
+      sha256 "dafad9af59250aabf8d0f4e688c97b057d57e5c85becd496eb6cf6d4342c52e5"
 
       def install
         bin.install "nopeus"
@@ -33,15 +33,7 @@ class Nopeus < Formula
   on_linux do
     if Hardware::CPU.arm? && !Hardware::CPU.is_64_bit?
       url "https://github.com/salfatigroup/nopeus/releases/download/v0.1.0/nopeus_Linux_armv7.tar.gz"
-      sha256 "8579686373d7ebc52f320bdae74c95416ab0fa677fd31a9cd26d3dad10ac02db"
-
-      def install
-        bin.install "nopeus"
-      end
-    end
-    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/salfatigroup/nopeus/releases/download/v0.1.0/nopeus_Linux_arm64.tar.gz"
-      sha256 "9c004123dc352822e45216c045533933f3846cc1358a204e363f15c9124fa2be"
+      sha256 "e96166b1257d1f83a2ae53effb0c17015b77b97cce92ad7aed2e9597f0834201"
 
       def install
         bin.install "nopeus"
@@ -49,7 +41,15 @@ class Nopeus < Formula
     end
     if Hardware::CPU.intel?
       url "https://github.com/salfatigroup/nopeus/releases/download/v0.1.0/nopeus_Linux_x86_64.tar.gz"
-      sha256 "13cfe13a669b97c02cf44254654f2de779357e9261d1de3a544a11e1321229e0"
+      sha256 "1187773040944d1e99ca271ac8c708cd455732d4561db609fc3523ac04f7bbf2"
+
+      def install
+        bin.install "nopeus"
+      end
+    end
+    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
+      url "https://github.com/salfatigroup/nopeus/releases/download/v0.1.0/nopeus_Linux_arm64.tar.gz"
+      sha256 "a60bb5d1dd0a3c9e18ac812f9dd8161dd4e6d329d49318a4f5235749f1ed4460"
 
       def install
         bin.install "nopeus"
@@ -58,10 +58,38 @@ class Nopeus < Formula
   end
 
   def post_install
-    curl https://api.logsnag.com/v1/log \
-      -H "content-type: application/json" \
-      -H "Authorization: Bearer 2f0420e7710703268ea2ab32f493c887" \
-      -d '{"project": "salfati-group-cloud", "title": "nopeus-downloads", "event": "New Download", "icon": "⬇️", "tags": {"country": '+ ${curl ipinfo.io | jq .country} +'}}'
+    require "uri"
+    require "json"
+    require "net/http"
+
+    url = URI("https://ipinfo.io")
+
+    https = Net::HTTP.new(url.host, url.port)
+    https.use_ssl = true
+
+    request = Net::HTTP::Get.new(url)
+    response = https.request(request)
+    country = JSON.parse(response.read_body)['country']
+
+    url = URI("https://api.logsnag.com/v1/log")
+
+    https = Net::HTTP.new(url.host, url.port)
+    https.use_ssl = true
+
+    request = Net::HTTP::Post.new(url)
+    request["Authorization"] = "Bearer 2f0420e7710703268ea2ab32f493c887"
+    request["Content-Type"] = "application/json"
+    request.body = JSON.dump({
+      "project": "salfati-group-cloud",
+      "channel": "nopeus-downloads",
+      "event": "New Download",
+      "icon": "⬇️",
+      "tags": {
+        "country": country
+      }
+    })
+
+    response = https.request(request)
   end
 
   test do
